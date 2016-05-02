@@ -6,24 +6,29 @@ HAProxy in a container, with simple setup using environment variables.
 
 ### Build
 
-    $ docker build -t docker-haproxy-simple .
+    $ docker build -t haproxy-simple .
 
 ### Run
 
 Typically:
 
-    $ docker run -itd docker-haproxy-simple
+    $ docker run -itd \
+        -p 8877:80
+        -e BACKEND_HOSTS='icanhazip1 64.182.208.181,icanhazip2 64.182.208.182' \
+          haproxy-simple
 
 #### Runtime Environment Variables
 
 There should be a reasonable amount of flexibility using the available variables. If not please raise an issue so your use case can be covered!
 
--
+- FRONTEND_PORT - the port to listen on e.g. `80`
+- BACKEND_HOSTS - the hosts in the backend pool, e.g.
+  `host1 1.2.3.4:80,host2 1.2.3.5.80,host3 1.2.3.6`
 
 ### Tag and Push
 
-    $ docker tag -f docker-haproxy-simple flaccid/docker-haproxy-simple
-    $ docker push flaccid/docker-haproxy-simple
+    $ docker tag -f haproxy-simple flaccid/haproxy-simple
+    $ docker push flaccid/haproxy-simple
 
 License and Authors
 -------------------
